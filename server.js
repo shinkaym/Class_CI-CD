@@ -10,7 +10,7 @@ const PORT = process.env.PORT
 server.get("/ci-cd", async (_, res, ___) => {
   res.status(200).json({
     status: 200,
-    message:"CI-CD By Nguyen Tien Tai Ok 🤖"
+    message:"Test hoan thanh bai 1"
   })
 });
 
