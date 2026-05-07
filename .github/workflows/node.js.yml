@@ -38,4 +38,5 @@ jobs:
 
     - name: Restart Class CI/CD service        
       run: |
-          pm2 restart class_cicd
+          pm2 restart class_cicd --update-env || pm2 start server.js --name class_cicd
+          pm2 save
