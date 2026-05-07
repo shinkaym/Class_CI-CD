@@ -33,8 +33,9 @@ jobs:
 
     - name: Created file .env
       run: |
-        touch .env
-        echo ${{ secrets.PROD_ENV }} > .env
+          cat > .env << 'EOF'
+          ${{ secrets.PROD_ENV }}
+          EOF
 
     - name: Restart Class CI/CD service        
       run: |
