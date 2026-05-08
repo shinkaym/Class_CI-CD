@@ -19,8 +19,9 @@ jobs:
       uses: actions/setup-node@v4
     - name: Created file .env
       run: |
-       touch .env
-       echo "PORT=${{ secrets.PORT }}" > .env
+        cat > .env << 'EOF'
+        ${{ secrets.PROD_ENV }}
+        EOF
     - name: Login to Docker Hub
       run: echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
     - name: Build docker image
