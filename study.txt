@@ -1,0 +1,14 @@
+1. CI/CD với PM2
+Push Code → GitHub Actions → SSH vào VPS → Pull Code → PM2 Restart
+
+- Tạo VM Linux (Ubuntu chọn version có LTS)
+- Gán external IP (nên static IP nếu dùng lâu dài)
+- Mở firewall cho ssh (có thể giới hạn IP theo /32), app, http, https
+- ssh vào vm, cài git, curl, build-essential, nodejs, npm, pm2
+- cấu hình runner github, cài service runner: sudo ./svc.sh install && sudo ./svc.sh start
+- Tạo secret PROD_ENV: 
+PORT=5000
+NODE_ENV=production
+- commit & push
+
+2. 
