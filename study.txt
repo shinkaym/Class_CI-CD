@@ -4,11 +4,27 @@ Push Code → GitHub Actions → SSH vào VPS → Pull Code → PM2 Restart
 - Tạo VM Linux (Ubuntu chọn version có LTS)
 - Gán external IP (nên static IP nếu dùng lâu dài)
 - Mở firewall cho ssh (có thể giới hạn IP theo /32), app, http, https
-- ssh vào vm, cài git, curl, build-essential, nodejs, npm, pm2
-- cấu hình runner github, cài service runner: sudo ./svc.sh install && sudo ./svc.sh start
-- Tạo secret PROD_ENV: 
+- Ssh vào vm, cài git, curl, build-essential, nodejs, npm, pm2
+- Cấu hình runner github, cài service runner: sudo ./svc.sh install && sudo ./svc.sh start
+- Tạo secrets: 
 PORT=5000
 NODE_ENV=production
-- commit & push
+- Commit & push
 
-2. 
+2. CI/CD với Docker
+Push Code → GitHub Actions → Build Docker Image → Push Registry → VPS Pull & Run
+
+-  Cài docker vào vm
+- Runner user phải có quyền Docker:
+sudo usermod -aG docker <runner_user>
+restart service runner để nhận group mới
+- Thêm secrets:
+DOCKER_HUB_USERNAME=<dockerhub_username>
+DOCKER_HUB_PASSWORD=<dockerhub_access_token>
+DOCKER_HUB_CLASS=<dockerhub_username>/<repo_image>:latest
+PORT=5001
+- Trong workflow .github/workflows/cicd-best.yaml:
+thêm bước docker login trước build/push
+- Tránh trùng port với bài 1 PM2 đang chạy 5000:
+giữ PM2 ở 5000, chạy Docker ở 5001
+- Commit & push
