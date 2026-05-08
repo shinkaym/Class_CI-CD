@@ -28,3 +28,19 @@ thêm bước docker login trước build/push
 - Tránh trùng port với bài 1 PM2 đang chạy 5000:
 giữ PM2 ở 5000, chạy Docker ở 5001
 - Commit & push
+
+3. CI/CD với Docker + Telegram Notification
+Push Code → GitHub Actions → Build & Deploy Docker → Telegram Bot thông báo kết quả
+
+- Secrets bổ sung:
+TELEGRAM_TOKEN=<telegram_bot_token>
+TELEGRAM_TO=<telegram_chat_id>
+- Secrets dùng cho build/deploy:
+PROD_ENV2=PORT=5000
+DOCKER_HUB_USERNAME=<dockerhub_username>
+DOCKER_HUB_PASSWORD=<dockerhub_access_token>
+PORT_RUN_CONTAINER=5002:5000
+- Runner deploy:
+runs-on: [self-hosted, linux]   
+- Test:
+Run workflow_dispatch trước, sau đó kiểm tra telegram nhận trạng thái deploy
