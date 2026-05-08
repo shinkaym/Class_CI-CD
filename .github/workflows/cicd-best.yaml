@@ -33,6 +33,14 @@ jobs:
     needs: build
     runs-on: [Linux]
     steps:
+      - uses: actions/setup-node@v4
+      - name: Created file .env
+        run: |
+          cat > .env << 'EOF'
+          PORT=${{ secrets.PORT }}
+          EOF
+
       - name: Run file docker-compose
-        run: 
+        run: |
+          docker compose -f docker-compose.yml down
           docker compose -f docker-compose.yml up -d --build
